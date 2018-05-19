@@ -452,11 +452,11 @@
 			name: 'Todo Mongolian Ali-gali',
 			source: 'rules/mn/mn-todoali.js'
 		},
-		'phagspa': {
+		phagspa: {
 			name: 'PhagsPa',
 			source: 'rules/mn/phagspa.js'
 		},
-		'mnc': {
+		mnc: {
 			name: 'ᠮᠠᠨᠵᡠ',
 			source: 'rules/mnc/mnc.js'
 		},
@@ -579,7 +579,7 @@
 		'te-apple': {
 			name: 'ఆపిల్',
 			source: 'rules/te/te-apple.js'
-		},'te-modular': {
+		}, 'te-modular': {
 			name: 'మాడ్యులర్',
 			source: 'rules/te/te-modular.js'
 		},
@@ -609,9 +609,9 @@
 		},
 		'roa-tara-GVU': {
 			name: 'Tarandine',
-			source: 'rules/roa-tara/roa-tara.js',
+			source: 'rules/roa-tara/roa-tara.js'
 		},
-		'pms': {
+		pms: {
 			name: 'Piemontèis',
 			source: 'rules/pms/pms.js'
 		},
@@ -679,7 +679,7 @@
 			name: 'ትግረ',
 			source: 'rules/tig/tig-geezim.js'
 		},
-		'sjo': {
+		sjo: {
 			name: 'ᠰᡞᠪᡝ',
 			source: 'rules/sjo/sjo.js'
 		},
@@ -868,7 +868,7 @@
 		},
 		fon: {
 			autonym: 'Fon',
-			inputmethods: [ 'fon-tilde' ],
+			inputmethods: [ 'fon-tilde' ]
 		},
 		fi: {
 			autonym: 'Suomi',

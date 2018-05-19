@@ -31,7 +31,7 @@
 
 				return sub;
 			default:
-				if (alwaysStacked) {
+				if ( alwaysStacked ) {
 					return sub;
 				}
 
@@ -139,7 +139,7 @@
 			[ 'h', function () { return normalOrSub( 'ཧ', 'ྷ', true ); } ],
 			[ 'A', function () { return normalOrSub( 'ཨ', 'ྸ' ); } ],
 			[ 'R', function () { return normalOrSub( 'ཪ', 'ྼ' ); } ],
-			[ 'Y', 'ྻ'],
+			[ 'Y', 'ྻ' ],
 			[ 'ྲI', function () { reinit(); return 'ྲྀ'; } ],
 			[ 'ླI', function () { reinit(); return 'ླྀ'; } ],
 			[ 'I', function () { reinit(); return 'ྀ'; } ],

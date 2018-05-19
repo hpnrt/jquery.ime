@@ -3,8 +3,18 @@
 	var TextEntryFactory, TextEntry, FormWidgetEntry, ContentEditableEntry,
 		defaultInputMethod;
 
+	/**
+	 * private function for debugging
+	 * @param {Object} obj
+	 */
+	function debug( obj ) {
+		if ( window.console && window.console.log ) {
+			window.console.log( obj );
+		}
+	}
+
 	// rangy is defined in the rangy library
-	/*global rangy */
+	/* global rangy */
 
 	/**
 	 * Just initializes an empty static object.
@@ -47,7 +57,7 @@
 		this.$element = $( element );
 		this.textEntry = textEntry;
 		// This needs to be delayed here since extending language list happens at DOM ready
-		$.ime.defaults.languages = arrayKeys( $.ime.languages );
+		$.ime.defaults.languages = Object.keys( $.ime.languages );
 		this.options = $.extend( {}, $.ime.defaults, options );
 		if ( this.options.imePath ) {
 			// Set the global IME path from the one specified to the instance
@@ -755,6 +765,7 @@
 	 * jQuery plugin ime
 	 *
 	 * @param {Object} option
+	 * @return {jQuery}
 	 */
 	$.fn.ime = function ( option ) {
 		return this.each( function () {
@@ -861,18 +872,4 @@
 		showSelector: true
 	};
 
-	/**
-	 * private function for debugging
-	 */
-	function debug( $obj ) {
-		if ( window.console && window.console.log ) {
-			window.console.log( $obj );
-		}
-	}
-
-	function arrayKeys( obj ) {
-		return $.map( obj, function ( element, index ) {
-			return index;
-		} );
-	}
 }( jQuery ) );

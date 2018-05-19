@@ -6,20 +6,19 @@ module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-contrib-copy' );
 	grunt.loadNpmTasks( 'grunt-contrib-csslint' );
 	grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
-	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
 	grunt.loadNpmTasks( 'grunt-contrib-qunit' );
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
-	grunt.loadNpmTasks( 'grunt-jscs' );
+	grunt.loadNpmTasks( 'gruntify-eslint' );
 	// Project configuration.
 	grunt.initConfig( {
 		pkg: grunt.file.readJSON( 'package.json' ),
 		meta: {
-			banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %>+'
-				+ '<%= grunt.template.today("yyyymmdd") %>\n'
-				+ '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>'
-				+ '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;'
-				+ ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n'
+			banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %>+' +
+				'<%= grunt.template.today("yyyymmdd") %>\n' +
+				'<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
+				'* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
+				' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n'
 		},
 		concat: {
 			options: {
@@ -65,26 +64,17 @@ module.exports = function ( grunt ) {
 		qunit: {
 			files: [ 'test/index.html' ]
 		},
-		jshint: {
+		eslint: {
 			options: {
-				jshintrc: true
+				config: '.eslintrc.json'
 			},
-			all: [
-				'*.js',
-				'src/*.js',
-				'rules/**/*.js',
-				'test/**/*.js'
-			]
-		},
-		jscs: {
-			fix: {
-				options: {
-					fix: true
-				},
-				src: '<%= jshint.all %>'
-			},
-			main: {
-				src: '<%= jshint.all %>'
+			target: {
+				src: [
+					'*.js',
+					'src/*.js',
+					'rules/**/*.js',
+					'test/**/*.js'
+				]
 			}
 		},
 		csslint: {
@@ -103,7 +93,7 @@ module.exports = function ( grunt ) {
 	} );
 
 	// Default task.
-	grunt.registerTask( 'lint', [ 'jshint', 'jscs:main', 'csslint' ] );
+	grunt.registerTask( 'lint', [ 'eslint', 'csslint' ] );
 	grunt.registerTask( 'build', [ 'concat', 'uglify', 'copy' ] );
 	grunt.registerTask( 'test', [ 'build', 'qunit' ] );
 	grunt.registerTask( 'default', [ 'lint', 'test' ] );

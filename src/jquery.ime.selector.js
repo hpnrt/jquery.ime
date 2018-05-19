@@ -3,6 +3,68 @@
 
 	var selectorTemplate, MutationObserver;
 
+	function languageListTitle() {
+		return $( '<h3>' )
+			.addClass( 'ime-lang-title' )
+			.attr( 'data-i18n', 'jquery-ime-other-languages' )
+			.text( 'Other languages' );
+	}
+
+	function imeList() {
+		return $( '<ul>' ).addClass( 'ime-list' );
+	}
+
+	function imeListTitle() {
+		return $( '<h3>' ).addClass( 'ime-list-title autonym' );
+	}
+
+	function toggleMenuItem() {
+		return $( '<div class="ime-disable selectable-row">' ).append(
+			$( '<span>' )
+				.attr( {
+					'class': 'ime-disable-link',
+					'data-i18n': 'jquery-ime-disable-text'
+				} )
+				.addClass( 'ime-checked' )
+				.text( 'System input method' ),
+			$( '<span>' )
+				.addClass( 'ime-disable-shortcut' )
+				.text( 'CTRL+M' )
+		);
+	}
+
+	/**
+	 * Check whether a keypress event corresponds to the shortcut key
+	 *
+	 * @param {event} event
+	 * @return {boolean} true if the key is a shortcut key
+	 */
+	function isShortcutKey( event ) {
+		// 77 - The letter M, for Ctrl-M
+		return event.ctrlKey && !event.altKey && ( event.which === 77 );
+	}
+
+	function isDOMAttrModifiedSupported() {
+		var p = document.createElement( 'p' ),
+			flag = false;
+
+		if ( p.addEventListener ) {
+			p.addEventListener( 'DOMAttrModified', function () {
+				flag = true;
+			}, false );
+		} else if ( p.attachEvent ) {
+			p.attachEvent( 'onDOMAttrModified', function () {
+				flag = true;
+			} );
+		} else {
+			return false;
+		}
+
+		p.setAttribute( 'id', 'target' );
+
+		return flag;
+	}
+
 	function IMESelector( element, options ) {
 		this.$element = $( element );
 		this.options = $.extend( {}, IMESelector.defaults, options );
@@ -188,7 +250,7 @@
 				e.stopPropagation();
 			} );
 
-			imeselector.$element.attrchange( function ( ) {
+			imeselector.$element.attrchange( function () {
 				if ( imeselector.$element.is( ':hidden' ) ) {
 					imeselector.$imeSetting.hide();
 				}
@@ -210,6 +272,7 @@
 		 *
 		 * @context {HTMLElement}
 		 * @param {jQuery.Event} e
+		 * @return {boolean}
 		 */
 		keydown: function ( e ) {
 			var ime = $( e.target ).data( 'ime' ),
@@ -389,8 +452,8 @@
 		 * @return {string} The autonym
 		 */
 		getAutonym: function ( languageCode ) {
-			return $.ime.languages[ languageCode ]
-				&& $.ime.languages[ languageCode ].autonym;
+			return $.ime.languages[ languageCode ] &&
+				$.ime.languages[ languageCode ].autonym;
 		},
 
 		/**
@@ -404,6 +467,7 @@
 
 		/**
 		 * Decide on initial language to select
+		 * @return {string}
 		 */
 		decideLanguage: function () {
 			if ( $.ime.preferences.getLanguage() ) {
@@ -610,36 +674,6 @@
 
 	$.fn.imeselector.Constructor = IMESelector;
 
-	function languageListTitle() {
-		return $( '<h3>' )
-			.addClass( 'ime-lang-title' )
-			.attr( 'data-i18n', 'jquery-ime-other-languages' )
-			.text( 'Other languages' );
-	}
-
-	function imeList() {
-		return $( '<ul>' ).addClass( 'ime-list' );
-	}
-
-	function imeListTitle() {
-		return $( '<h3>' ).addClass( 'ime-list-title autonym' );
-	}
-
-	function toggleMenuItem() {
-		return $( '<div class="ime-disable selectable-row">' ).append(
-			$( '<span>' )
-				.attr( {
-					'class': 'ime-disable-link',
-					'data-i18n': 'jquery-ime-disable-text'
-				} )
-				.addClass( 'ime-checked' )
-				.text( 'System input method' ),
-			$( '<span>' )
-				.addClass( 'ime-disable-shortcut' )
-				.text( 'CTRL+M' )
-		);
-	}
-
 	selectorTemplate = '<div class="imeselector imeselector-toggle">' +
 		'<a class="ime-name imeselector-toggle" href="#"></a>' +
 		'<b class="ime-setting-caret imeselector-toggle"></b></div>';
@@ -647,38 +681,6 @@
 	MutationObserver = window.MutationObserver ||
 		window.WebKitMutationObserver ||
 		window.MozMutationObserver;
-
-	/**
-	 * Check whether a keypress event corresponds to the shortcut key
-	 *
-	 * @param {event} event
-	 * @return {boolean} true if the key is a shortcut key
-	 */
-	function isShortcutKey( event ) {
-		// 77 - The letter M, for Ctrl-M
-		return event.ctrlKey && !event.altKey && ( event.which === 77 );
-	}
-
-	function isDOMAttrModifiedSupported() {
-		var p = document.createElement( 'p' ),
-			flag = false;
-
-		if ( p.addEventListener ) {
-			p.addEventListener( 'DOMAttrModified', function () {
-				flag = true;
-			}, false );
-		} else if ( p.attachEvent ) {
-			p.attachEvent( 'onDOMAttrModified', function () {
-				flag = true;
-			} );
-		} else {
-			return false;
-		}
-
-		p.setAttribute( 'id', 'target' );
-
-		return flag;
-	}
 
 	$.fn.attrchange = function ( callback ) {
 		var observer;
