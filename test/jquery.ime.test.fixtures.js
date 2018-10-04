@@ -3933,6 +3933,7 @@ var palochkaVariants = {
 			{ input: 'C', output: 'ᱬ', description: 'Santali C -> ᱬ' },
 			{ input: 'c', output: 'ᱢ', description: 'Santali c -> ᱢ' },
 			{ input: 'B', output: 'ᱶ', description: 'Santali B -> ᱶ' }
+			{ input: 'b', output: 'ᱣ', description: 'Santali b -> ᱣ' }
 		],
 		inputmethod: 'sat-inscript2-ol-chiki'
 	},
